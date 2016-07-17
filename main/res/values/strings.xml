@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MTP Explorer</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="layout_status">Status</string>
+    <string name="layout_thumb">Thumb</string>
+    <string name="layout_headline">Headline</string>
+    <string name="layout_sub_headline">Sub headline</string>
+    <string name="title_activity_browser">BrowserActivity</string>
+    
+    <string name="browser_item_thumb">Item Thumb</string>
+    <string name="browser_item_title">Item Title</string>
+    <string name="browser_item_subtitle">Item Subtitle</string>
+
+</resources>

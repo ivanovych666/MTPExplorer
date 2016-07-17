@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <group
+ 		android:id="@+id/notAllSelected">
+    
+	    <item
+	        android:id="@+id/selectAll"
+	        android:orderInCategory="50"
+	        android:showAsAction="never"
+	        android:title="Select All"/>
+	    
+	</group>
+	
+    <group
+        android:id="@+id/hasSelected">
+	    
+	    <item
+	        android:id="@+id/selectNone"
+	        android:orderInCategory="50"
+	        android:showAsAction="never"
+	        android:title="Select None"/>
+	    
+	    <item
+	        android:id="@+id/copySelection"
+	        android:orderInCategory="50"
+	        android:showAsAction="never"
+	        android:title="Copy Selection"/>
+	    
+	    <item
+	        android:id="@+id/moveSelection"
+	        android:orderInCategory="50"
+	        android:showAsAction="never"
+	        android:title="Move Selection"/>
+	    
+	    <item
+	        android:id="@+id/removeSelection"
+	        android:orderInCategory="50"
+	        android:showAsAction="never"
+	        android:title="Remove Selection"/>
+	    
+	</group>
+
+</menu>

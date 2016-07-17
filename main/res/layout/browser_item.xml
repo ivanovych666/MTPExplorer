@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="200dip"
+	android:layout_height="200dip"
+	android:padding="25dip" >
+
+	<ImageView
+	    android:id="@+id/thumbnail"
+	    android:layout_width="100dip"
+	    android:layout_height="100dip"
+	    android:layout_centerInParent="true"
+	    android:background="@drawable/browser_item_thumb"
+	    android:contentDescription="@string/browser_item_thumb" />
+	
+	<TextView
+	    android:id="@+id/headline"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:gravity="center_horizontal"
+	    android:maxLines="1"
+	    android:text="@string/browser_item_title" />
+
+	<CheckBox
+	    android:id="@+id/checkbox"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignRight="@+id/thumbnail"
+	    android:layout_alignTop="@+id/thumbnail"
+	    android:focusable="false"
+	    android:focusableInTouchMode="false" />
+	
+</RelativeLayout>
