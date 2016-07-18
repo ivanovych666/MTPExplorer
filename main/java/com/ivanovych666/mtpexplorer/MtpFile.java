@@ -2,16 +2,11 @@ package com.ivanovych666.mtpexplorer;
 
 import java.util.Arrays;
 
-import android.content.Context;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbManager;
 import android.mtp.MtpConstants;
 import android.mtp.MtpDevice;
 import android.mtp.MtpObjectInfo;
 import android.mtp.MtpStorageInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 public class MtpFile {
 	

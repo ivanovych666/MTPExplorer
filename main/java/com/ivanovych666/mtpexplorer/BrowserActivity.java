@@ -1,21 +1,13 @@
 package com.ivanovych666.mtpexplorer;
 
 import java.util.ArrayList;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.mtp.MtpDevice;
 import android.mtp.MtpDeviceInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;

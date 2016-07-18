@@ -1,8 +1,6 @@
 package com.ivanovych666.mtpexplorer;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -55,13 +53,6 @@ public class CopyFilesTask extends AsyncTask<MtpFile, Integer, Integer> {
 			}
 			MtpFile file = files[index];
 
-			//TODO: remove test code
-			try {
-				TimeUnit.SECONDS.sleep(2);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
 			sizeTotal += file.getSize();
 			publishProgress((int) ((index + 1) * 100 / length));
 		}
@@ -77,13 +68,6 @@ public class CopyFilesTask extends AsyncTask<MtpFile, Integer, Integer> {
 			}
 			MtpFile file = files[index];
 
-			//TODO: remove test code
-			try {
-				TimeUnit.SECONDS.sleep(4);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
 			String destPath = this.destination + File.separator + file;
 			
 			Log.d(TAG, "Copy File " + file + " => " + destPath);
