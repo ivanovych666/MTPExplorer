@@ -4,25 +4,35 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class CopyFilesTask extends AsyncTask<MtpFile, Integer, Long> {
+public class CopyFilesTask extends AsyncTask<MtpFile, Integer, Integer> {
 
-	public ProgressDialog progressDialog = null;
-	public String destination = null;
-	public long total = 0;
+	public interface OnResultListener {
+
+		void onResult(Integer result);
+
+	}
+
+	private ProgressDialog progressDialog = null;
+	private String destination = null;
+	private Integer result = 0;
+	private String task = null;
+	private Integer length = 0;
+	private Integer index = 0;
+	private OnResultListener onResultListener = null;
 	private static final String TAG = "CopyFilesTask";
 	
-	public CopyFilesTask(ProgressDialog progressDialog, String destination){
-		this.progressDialog = progressDialog;
+	public CopyFilesTask(Context context, String destination){
+		this.progressDialog = new ProgressDialog(context);
 		this.destination = destination;
 	}
 	
 	@Override
 	protected void onPreExecute() {
 		progressDialog.setTitle("Copying files");
-		progressDialog.setMessage("Please wait.");
 		progressDialog.setCancelable(false);
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		progressDialog.show();
@@ -30,48 +40,85 @@ public class CopyFilesTask extends AsyncTask<MtpFile, Integer, Long> {
 	}
 
 	@Override
-	protected Long doInBackground(MtpFile... files) {
+	protected Integer doInBackground(MtpFile... files) {
+		long sizeTotal = 0;
+		length = files.length;
 
-		for(int i = 0; i < files.length; i++){
-			total += files[i].getSize();
+		task = "Calculating size";
+		index = 0;
+		publishProgress(0);
+
+		for(; index < length; index++){
+
+			if(isCancelled()) {
+				return null;
+			}
+			MtpFile file = files[index];
+
+			//TODO: remove test code
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			sizeTotal += file.getSize();
+			publishProgress((int) ((index + 1) * 100 / length));
 		}
 
 		long progress = 0;
-		for(int i = 0; i < files.length; i++){
-			if(isCancelled()) break;
+		task = "Copying files";
+		index = 0;
+		publishProgress(0);
 
+		for(; index < length; index++){
+			if(isCancelled()) {
+				return null;
+			}
+			MtpFile file = files[index];
+
+			//TODO: remove test code
 			try {
 				TimeUnit.SECONDS.sleep(4);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
-			String destPath = this.destination + File.separator + files[i];
+			String destPath = this.destination + File.separator + file;
 			
-			Log.d(TAG, "Copy File " + files[i] + " => " + destPath);
+			Log.d(TAG, "Copy File " + file + " => " + destPath);
 
-			files[i].open(progressDialog.getContext());
-			if(files[i].copyTo(destPath)){
+			if(file.copyTo(destPath)){
+				result++;
 				Log.d(TAG, "	success");
 			}else{
 				Log.d(TAG, "	failed");
 			}
-			progress += files[i].getSize();
-			files[i].close();
-			
-			publishProgress((int) (progress * 100 / total));
+			progress += file.getSize();
+
+			publishProgress((int) (progress * 100 / sizeTotal));
 		}
 		
-		return total;
+		return result;
+
 	}
 
 	protected void onProgressUpdate(Integer... progress) {
+		progressDialog.setMessage(task + " (" + (index + 1) + " of " + length + ").");
 		progressDialog.setProgress(progress[0]);
     }
 	
 	@Override
-	protected void onPostExecute(Long result) {
+	protected void onPostExecute(Integer result) {
 		progressDialog.dismiss();
+		if (onResultListener != null) {
+			onResultListener.onResult(result);
+		}
+	}
+
+	public CopyFilesTask setOnResultListener (OnResultListener listener) {
+		onResultListener = listener;
+		return this;
 	}
 
 }
