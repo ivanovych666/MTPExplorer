@@ -1,6 +1,8 @@
 package com.ivanovych666.mtpexplorer;
 
 import android.app.Fragment;
+import android.hardware.usb.UsbDevice;
+import android.mtp.MtpDevice;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,7 +12,9 @@ import android.util.Log;
 public class RetainedFragment extends Fragment {
 
     private static final String TAG = "RetainedFragment";
-    private MtpFile data;
+    public MtpFile mtpFile;
+    public UsbDevice usbDevice = null;
+    public MtpDevice mtpDevice = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,26 +29,4 @@ public class RetainedFragment extends Fragment {
         Log.d(TAG, "onDestroy");
     }
 
-    public void setData(MtpFile value) {
-        Log.d(TAG, "setData");
-        String dataStr = "NULL";
-        data = value;
-
-        if (data != null) {
-            dataStr = data.toString();
-        }
-        Log.d(TAG, "data: " + dataStr);
-    }
-
-    public MtpFile getData() {
-        Log.d(TAG, "getData");
-        String dataStr = "NULL";
-
-        if (data != null) {
-            dataStr = data.toString();
-        }
-        Log.d(TAG, "data: " + dataStr);
-
-        return data;
-    }
 }

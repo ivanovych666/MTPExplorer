@@ -123,10 +123,15 @@ public class UsbDeviceInfo {
         }catch(IOException e){
         	
         }
-		
-		if(vendorName == null) vendorName = "Unknown vendor";
-		if(productName == null) productName = "Unknown product";
-		
+
+		if (vendorName == null) {
+			vendorName = "Unknown vendor";
+		}
+
+		if(productName == null){
+			productName = "Unknown product";
+		}
+
 		return vendorName + " " + productName;
 	}
 	

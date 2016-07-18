@@ -24,8 +24,7 @@ public class MtpFile {
 	private Object entry = null;
 	private MtpDevice device = null;
 	private MtpFile parentFile = null;
-	private boolean opened = false;
-	
+
 	private static final String TAG = "MtpFile";
 	
 	public MtpFile(MtpDevice mtpDevice){
@@ -48,7 +47,11 @@ public class MtpFile {
 		parentFile = parent;
 		device = parent.device;
 	}
-	
+
+	public MtpDevice getDevice(){
+		return device;
+	}
+
 	public MtpFile getParent(){
 		return parentFile;
 	}
@@ -99,6 +102,7 @@ public class MtpFile {
 	}
 
 	public MtpFile[] listFiles(){
+		Log.d(TAG, "listFiles");
 		MtpFile[] list = null;
 		
 		switch(entryClass){
@@ -126,6 +130,7 @@ public class MtpFile {
 	}
 	
 	private MtpFile[] listFiles(int storageId, int parentHandle){
+		Log.d(TAG, "listFiles");
 		int l = 0;
 		int[] handles = device.getObjectHandles(
 			storageId,
@@ -162,47 +167,6 @@ public class MtpFile {
 			((MtpObjectInfo) entry).getObjectHandle(),
 			destPath
 		);
-	}
-	
-	public boolean open(Context context){
-		if(opened){
-			return true;
-		}
-		
-		UsbManager manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
-		UsbDevice usbDevice = manager.getDeviceList().get(
-			device.getDeviceName()
-		);
-		
-		if(!manager.hasPermission(usbDevice)){
-			Toast toast = Toast.makeText(context, "Permissions denied for USB Device.", Toast.LENGTH_LONG);
-			toast.show();
-			return false;
-		}
-		
-		UsbDeviceConnection connection = manager.openDevice(usbDevice);
-		if(connection.equals(null)){
-			Toast toast = Toast.makeText(context, "Failed to open USB Device.", Toast.LENGTH_LONG);
-			toast.show();
-			return false;
-		}
-		
-		if(!device.open(connection)){
-			Toast toast = Toast.makeText(context, "Failed to open MTP Device.", Toast.LENGTH_LONG);
-			toast.show();
-			return false;
-		}
-		
-		opened = true;
-		
-		return true;
-	}
-	
-	public void close(){
-		if(opened){
-			device.close();
-			opened = false;
-		}
 	}
 	
 }
